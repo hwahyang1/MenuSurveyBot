@@ -1,0 +1,37 @@
+{
+  "name": "MenuSurveyBot",
+  "version": "1.0.0",
+  "description": "Menu Survey Discord Bot",
+  "main": "dist/main.js",
+  "scripts": {
+    "update-dependencies": "npx ncu -u && npm i -D --save",
+    "test": "ts-node src/main.ts",
+    "build": "tsc --project tsconfig.json",
+    "run": "node dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hwahyang1/MenuSurveyBot.git"
+  },
+  "author": "HwaHyang",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/hwahyang1/MenuSurveyBot/issues"
+  },
+  "homepage": "https://github.com/hwahyang1/MenuSurveyBot#readme",
+  "dependencies": {
+    "@discordjs/rest": "^1.7.1",
+    "discord.js": "^14.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.1",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}
