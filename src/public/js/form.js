@@ -83,6 +83,7 @@ let getSessionInfo = () => {
 		url: '/api/v1/sessionInfo',
 		data: { session: urlParams.get('s') },
 		error: (xhr, status, errorThrown) => {
+			setSpinnerEnable(false);
 			$('title').text($(document).attr('title').replace('{GroupName}', undefined));
 			const res = JSON.parse(xhr.responseText);
 			showModal(
