@@ -74,11 +74,28 @@ class DataManager {
 		return index >= 0;
 	}
 
+	public isSessionExistWithUserId(userId: string): boolean {
+		if (
+			this.data.sessions === undefined ||
+			this.data.sessions === null ||
+			this.data.sessions.length === undefined ||
+			this.data.sessions.length === 0
+		)
+			return false;
+		const index = this.data.sessions.findIndex((target) => target.user === userId);
+		return index >= 0;
+	}
+
 	public getSessionsData = (): Array<ISession> | null => this.data.sessions;
 	public getSessionData(sessionId: string): ISession | null {
 		if (!this.data || !this.data.sessions) return null;
 		if (!this.isSessionExist(sessionId)) return null;
 		return this.data.sessions.find((target) => target.sessionId == sessionId);
+	}
+	public getSessionDataWithUserId(userId: string): ISession | null {
+		if (!this.data || !this.data.sessions) return null;
+		if (!this.isSessionExistWithUserId(userId)) return null;
+		return this.data.sessions.find((target) => target.user == userId);
 	}
 	public addSessionData(data: ISession) {
 		if (!this.data || !this.data.sessions) return;
@@ -91,6 +108,12 @@ class DataManager {
 		if (!this.data || !this.data.sessions) return;
 		if (!this.isSessionExist(sessionId)) return;
 		this.data.sessions.splice(this.data.sessions.indexOf(this.getSessionData(sessionId)), 1);
+		this.saveData();
+	}
+	public deleteSessionDataWithUserId(userId: string) {
+		if (!this.data || !this.data.sessions) return;
+		if (!this.isSessionExistWithUserId(userId)) return;
+		this.data.sessions.splice(this.data.sessions.indexOf(this.getSessionData(userId)), 1);
 		this.saveData();
 	}
 
