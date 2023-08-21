@@ -21,6 +21,7 @@
   "homepage": "https://github.com/hwahyang1/MenuSurveyBot#readme",
   "dependencies": {
     "@discordjs/rest": "^2.0.1",
+    "dayjs": "^1.11.9",
     "discord.js": "^14.13.0"
   },
   "devDependencies": {
