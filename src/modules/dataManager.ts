@@ -70,10 +70,8 @@ class DataManager {
 			this.data.sessions.length === 0
 		)
 			return false;
-		this.data.sessions.forEach((target) => {
-			if (target.sessionId === sessionId) return true;
-		});
-		return false;
+		const index = this.data.sessions.findIndex((target) => target.sessionId === sessionId);
+		return index >= 0;
 	}
 
 	public getSessionsData = (): Array<ISession> | null => this.data.sessions;
