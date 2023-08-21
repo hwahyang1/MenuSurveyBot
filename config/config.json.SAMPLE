@@ -1,6 +1,17 @@
 {
-    "token": "BOT_TOKEN",
-    "owner": "USER_ID",
-    "guildId": "GUILD_ID",
-    "bankAccount": "OO은행 000000-000000"
+    "express": {
+        "serverHost": "127.0.0.1",
+        "serverPort": 8080,
+        "header": {
+            "Server": "MenuSurveyBot",
+            "x-powered-by": "MenuSurveyBot"
+        }
+    },
+    "discord": {
+        "token": "BOT_TOKEN",
+        "owner": "USER_ID",
+        "guildId": "GUILD_ID"
+    },
+    "bankAccount": "OO은행 000000-000000",
+    "sessionDurationSeconds": 18000
 }
