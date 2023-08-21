@@ -18,9 +18,9 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
-import DataManager from './dataManager';
+import DataManager from '../dataManager';
 
-import { IData, IGroup, IMenu, IParticipants, ISession } from '../template/IData';
+import { IData, IGroup, IMenu, IParticipants, ISession } from '../../template/IData';
 
 class SlashCommandsManager {
 	public readonly dateRule = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
