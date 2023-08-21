@@ -20,7 +20,7 @@ class ExpressEventHandler {
 				new ErrorCode(
 					401,
 					'Invalid Session',
-					'만료되었거나 유효하지 않은 세션입니다. 링크를 다시 생성 해 주세요.'
+					'만료되었거나 유효하지 않은 세션입니다. (또는 모임 마감시간이 지났습니다.) 링크를 다시 생성 해 주세요.'
 				)
 			);
 		} else {
@@ -45,7 +45,7 @@ class ExpressEventHandler {
 				new ErrorCode(
 					401,
 					'Invalid Session',
-					'만료되었거나 유효하지 않은 세션입니다. 링크를 다시 생성 해 주세요.'
+					'만료되었거나 유효하지 않은 세션입니다. (또는 모임 마감시간이 지났습니다.) 링크를 다시 생성 해 주세요.'
 				)
 			);
 		} else {

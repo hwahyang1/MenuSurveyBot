@@ -157,7 +157,7 @@ class SlashCommandsManager {
 
 				let newGroupData = {
 					groupId: groupId,
-					holder: interaction.member.user.id,
+					holder: interactionMember.id,
 					name: interaction.options.getString('모임명'),
 					deadlineTimestamp: date.unix(),
 					maxParticipants: maxParticipants,
@@ -272,9 +272,9 @@ class SlashCommandsManager {
 				const embed = new EmbedBuilder()
 					.setTitle(`${groupData.name} 모임 개최 중!`)
 					.setDescription(`<@${groupData.holder}>님의 모임이 현재 개최 중입니다!`)
-					.setFields({
+					.addFields({
 						name: '모임 정보',
-						value: `- 모임명: \`${groupData.name}\`\n- 인원 제한: ${groupData.maxParticipants}명\n- 모임 마감: <t:${groupData.deadlineTimestamp}>`,
+						value: `- 모임명: \`${groupData.name}\`\n- 인원 제한: ${groupData.maxParticipants}명\n- 모임 마감: <t:${groupData.deadlineTimestamp}> (<t:${groupData.deadlineTimestamp}:R>)`,
 						inline: false,
 					})
 					.setColor(0xbbf1ff)
