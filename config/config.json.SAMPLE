@@ -1,4 +1,6 @@
 {
-    "Token": "BOT_TOKEN",
-    "Owner": "USER_ID"
+    "token": "BOT_TOKEN",
+    "owner": "USER_ID",
+    "guildId": "GUILD_ID",
+    "bankAccount": "OO은행 000000-000000"
 }
