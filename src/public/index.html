@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <title>{GroupName} 모임 참여 페이지</title>
+
+        <meta name="format-detection" content="telephone=no">
+        <meta name="format-detection" content="email=no">
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://cdn.hwahyang.space/hspace_v2/fonts/NanumFonts.css" rel="stylesheet">
+        
+        <link type="text/css" rel="stylesheet" href="./css/materialize.min.css"  media="screen,projection"/>
+        <link href="https://cdn.hwahyang.space/hspace_v2/css/textFormat.css" rel="stylesheet" />
+
+        <style>
+            .hidden {
+                height:100%;
+                min-height:100%;
+                overflow:hidden !important;
+                touch-action:none;
+            }
+            .container {
+                padding-right: 15px;
+                padding-left: 15px;
+                padding-top: 15px;
+                padding-bottom: 15px;
+                margin-right: auto;
+                margin-left: auto;
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+            .overlay {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 2048;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, .7);
+			}
+			.spinner {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin: -25px 0 0 -25px;
+			}
+        </style>
+    </head>
+
+    <body class="indigo lighten-4 hidden">
+        <div class="overlay">
+            <div class="preloader-wrapper big active spinner">
+                <div class="spinner-layer spinner-blue">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div><div class="gap-patch">
+						<div class="circle"></div>
+					</div><div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+                </div>
+          
+                <div class="spinner-layer spinner-red">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div><div class="gap-patch">
+						<div class="circle"></div>
+					</div><div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+                </div>
+          
+                <div class="spinner-layer spinner-yellow">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div><div class="gap-patch">
+						<div class="circle"></div>
+					</div><div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+                </div>
+          
+                <div class="spinner-layer spinner-green">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div><div class="gap-patch">
+						<div class="circle"></div>
+					</div><div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col" style="float:initial;">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title NanumGothicEB" id="formTitle">{GroupName} 모임 참여 페이지</span>
+                            <p class="NanumSquareR" id="formDescription"><a class="indigo-text indigo-darken-2" disabled>{DiscordName}</a>으로 모임에 참여합니다.<br>본인이 아닐 경우, 디스코드로 돌아가 링크를 다시 생성 해 주세요.</p>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title NanumGothicEB">모임 정보</span>
+                            <p class="NanumSquareR" id="groupInfo">모임 코드: {GroupId}<br>모임명: {GroupName}<br>인원 제한: {MaxParticipants}명<br>모임 마감: {Deadline}</p>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title NanumGothicEB">항목 선택</span>
+                            <p class="NanumSquareR">원하는 항목을 선택하세요.<br>항목은 여러 개 선택 가능합니다.</p>
+                            <br>
+                            <ul class="collapsible" id="menuLists">
+                                <li>
+                                    <div class="collapsible-header"><i class="material-icons">arrow_drop_down</i>테스트가게</div>
+                                    <div class="collapsible-body">
+                                        <p>
+                                            <label>
+                                                <input type="checkbox" class="filled-in" />
+                                                <span class="black-text">테스트메뉴 (5,000원)</span>
+                                            </label>
+                                        </p>
+                                        <br>
+                                        <p>
+                                            <label>
+                                                <input type="checkbox" class="filled-in" />
+                                                <span class="black-text">테스트메뉴3 (10,000원)</span>
+                                            </label>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="collapsible-header"><i class="material-icons">arrow_drop_down</i>테스트가게2</div>
+                                    <div class="collapsible-body">
+                                        <p>
+                                            <label>
+                                                <input type="checkbox" class="filled-in" />
+                                                <span class="black-text">테스트메뉴2 (6,000원)</span>
+                                            </label>
+                                        </p>
+                                        <br>
+                                        <p>
+                                            <label>
+                                                <input type="checkbox" class="filled-in" />
+                                                <span class="black-text">테스트메뉴4 (4,400원)</span>
+                                            </label>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title NanumGothicEB">선택 확인</span>
+                            <p class="NanumSquareR" id="confirmDescription">선택한 항목을 확인 후, 아래에 표시된 총액을 <a class="orange-text orange-darken-3" disabled>{BankAccount}</a>로 입금 해 주세요.</p>
+                            <br>
+                            <table class="highlight responsive-table">
+                                <thead>
+                                    <tr>
+                                        <th>가게명</th>
+                                        <th>항목명</th>
+                                        <th>가격</th>
+                                    </tr>
+                                </thead>
+                        
+                                <tbody id="totalBody">
+                                    <tr>
+                                        <td>테스트가게</td>
+                                        <td>테스트메뉴3</td>
+                                        <td>10,000원</td>
+                                    </tr>
+                                    <tr>
+                                        <td>테스트가게2</td>
+                                        <td>테스트메뉴2</td>
+                                        <td>6,000원</td>
+                                    </tr>
+                                </tbody>
+
+                                <tfoot>
+                                    <td>총액</td>
+                                    <td></td>
+                                    <td id="totalPrice">16,000원</td>
+                                </tfoot>
+                            </table>
+                            <br>
+                        </div>
+                        <div class="card-action NanumSquareR" style="text-align: right;">
+                            <a class="btn waves-effect waves-green btn-flat cyan-text white modal-trigger" href="#submit">제출</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer indigo lighten-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text NanumSquareB">MenuSurveyBot</h5>
+                        <p class="grey-text text-lighten-4 NanumSquareRoundR">메뉴 조사를 위해 제작된 디스코드 채팅봇 입니다.</p>
+                    </div>
+                    <div class="col l4 offset-l2 s12">
+                        <h5 class="white-text NanumSquareB">Tech Stacks</h5>
+                        <ul class="NanumSquareRoundR">
+                            <li><a class="grey-text text-lighten-3" href="https://nodejs.org/">Node.js</a></li>
+                            <li><a class="grey-text text-lighten-3" href="https://www.typescriptlang.org/">Typescript</a></li>
+                            <li><a class="grey-text text-lighten-3" href="https://discord.js.org/">discord.js</a></li>
+                            <li><a class="grey-text text-lighten-3" href="https://expressjs.com/">Express.js</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright NanumSquareRoundR">
+                <div class="container">
+                    © 2017-2023 HwaHyang.
+                    <a class="grey-text text-lighten-4 right" href="https://github.com/hwahyang1/MenuSurveyBot/">Project GitHub</a>
+                </div>
+            </div>
+        </footer>
+		<div id="submit" class="modal">
+			<div class="modal-content">
+				<h4 class="NanumSquareB">확인</h4>
+				<p class="NanumSquareR">한번 제출하면 취소 할 수 없습니다.<br>정말로 제출할까요?</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-close waves-effect waves-green cyan-text btn-flat">취소</a>
+				<a href="javascript:;" OnClick="submitForm();" class="waves-effect waves-green cyan-text btn-flat">제출</a>
+			</div>
+		</div>
+		<div id="info" class="modal">
+			<div class="modal-content">
+				<h4 class="NanumSquareB"" id="infoTitle">에러</h4>
+				<p class="NanumSquareR" id="infoDescription">알 수 없는 문제가 발생했습니다.</p>
+			</div>
+			<div class="modal-footer" id="infoClose">
+				<a href="#!" class="modal-close waves-effect waves-green cyan-text btn-flat">닫기</a>
+			</div>
+		</div>
+    </body>
+    <script type="text/javascript" src="./js/jquery-3.7.0.min.js"></script>
+    <script type="text/javascript" src="./js/materialize.min.js"></script>
+    <script type="text/javascript" src="./js/form.js"></script>
+</html>
