@@ -28,26 +28,6 @@ class DataManager {
 
 	public getAllData = (): IData => this.data;
 
-	/* ==================== ActivateGroups ==================== */
-	public getActiveGroupsData = (): Map<string, string> => this.data.activeGroups;
-	public getActiveGroupData(channelId: string): string | null {
-		if (!this.data || !this.data.activeGroups) return null;
-		if (!this.data.activeGroups.has(channelId)) return null;
-		return this.data.activeGroups?.get(channelId);
-	}
-	public addActiveGroupData(channelId: string, groupId: string) {
-		if (!this.data || !this.data.activeGroups) return;
-		if (this.data.activeGroups.has(channelId)) return;
-		this.data.activeGroups.set(channelId, groupId);
-		this.saveData();
-	}
-	public deleteActiveGroupData(channelId: string) {
-		if (!this.data || !this.data.activeGroups) return;
-		if (!this.data.activeGroups.has(channelId)) return;
-		this.data.activeGroups.delete(channelId);
-		this.saveData();
-	}
-
 	/* ==================== Groups ==================== */
 	public isGroupExist(groupId: string): boolean {
 		if (
@@ -59,28 +39,6 @@ class DataManager {
 			return false;
 		const index = this.data.groups.findIndex((target) => target.groupId === groupId);
 		return index >= 0;
-	}
-
-	public isGroupActivate(groupId: string): boolean {
-		if (!this.data || !this.data.activeGroups) return false;
-		if (!this.isGroupExist(groupId)) return false;
-		for (const [key, value] of this.data.activeGroups.entries()) {
-			if (value === groupId) {
-				return true;
-			}
-		}
-		return false;
-	}
-	public findGroupActivate(groupId: string): string | null {
-		if (!this.data || !this.data.activeGroups) return null;
-		if (!this.isGroupExist(groupId)) return null;
-		for (const [key, value] of this.data.activeGroups.entries()) {
-			if (value === groupId) {
-				// channelId
-				return key;
-			}
-		}
-		return null;
 	}
 
 	public getGroupsData = (): Array<IGroup> | null => this.data.groups;

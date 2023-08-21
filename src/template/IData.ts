@@ -1,13 +1,14 @@
 'use strict';
 
 interface IData {
-	activeGroups: Map<string, string>;
 	groups?: Array<IGroup>;
 	sessions?: Array<ISession>;
 }
 
 interface IGroup {
 	groupId: string;
+	holder: string;
+	name: string;
 	deadlineTimestamp: number;
 	maxParticipants: number;
 	menus?: Array<IMenu>;

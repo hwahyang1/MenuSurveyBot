@@ -1,7 +1,4 @@
 {
-	"activeGroups": {
-		"channel-id": "group-id"
-	},
 	"groups": [
 		{
 			"groupId": "group-id",
