@@ -2,8 +2,7 @@
 
 import fs from 'fs';
 
-import { IData, IGroup, ISession } from '../template/IData';
-import MapTools from '../template/mapTools';
+import { IData, IGroup, IMenu, IParticipants, ISession } from '../template/IData';
 
 class DataManager {
 	private static instance: DataManager;
@@ -24,16 +23,12 @@ class DataManager {
 			throw "'/data/data.json' does not exist. Use '/data/data.json.SAMPLE'.";
 		}
 		let rawData = JSON.parse(await fs.readFileSync(this.dataPath, 'utf-8'));
-
-		const activeGroups = MapTools.objToMap(rawData.activeGroups);
-		const groups = MapTools.objToMap(rawData.groups);
-		const sessions = MapTools.objToMap(rawData.sessions);
-
-		this.data = { activeGroups, groups, sessions } as IData;
+		this.data = rawData as IData;
 	}
 
 	public getAllData = (): IData => this.data;
 
+	/* ==================== ActivateGroups ==================== */
 	public getActiveGroupsData = (): Map<string, string> => this.data.activeGroups;
 	public getActiveGroupData(channelId: string): string | null {
 		if (!this.data || !this.data.activeGroups) return null;
@@ -53,53 +48,98 @@ class DataManager {
 		this.saveData();
 	}
 
-	public getGroupsData = (): Map<string, IGroup> | null => this.data.groups;
+	/* ==================== Groups ==================== */
+	public isGroupExist(groupId: string): boolean {
+		if (
+			this.data.groups === undefined ||
+			this.data.groups === null ||
+			this.data.groups.length === undefined ||
+			this.data.groups.length === 0
+		)
+			return false;
+		const index = this.data.groups.findIndex((target) => target.groupId === groupId);
+		return index >= 0;
+	}
+
+	public isGroupActivate(groupId: string): boolean {
+		if (!this.data || !this.data.activeGroups) return false;
+		if (!this.isGroupExist(groupId)) return false;
+		for (const [key, value] of this.data.activeGroups.entries()) {
+			if (value === groupId) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public findGroupActivate(groupId: string): string | null {
+		if (!this.data || !this.data.activeGroups) return null;
+		if (!this.isGroupExist(groupId)) return null;
+		for (const [key, value] of this.data.activeGroups.entries()) {
+			if (value === groupId) {
+				// channelId
+				return key;
+			}
+		}
+		return null;
+	}
+
+	public getGroupsData = (): Array<IGroup> | null => this.data.groups;
 	public getGroupData(groupId: string): IGroup | null {
 		if (!this.data || !this.data.groups) return null;
-		if (!this.data.groups.has(groupId)) return null;
-		return this.data.groups?.get(groupId);
+		if (!this.isGroupExist(groupId)) return null;
+		return this.data.groups.find((target) => target.groupId == groupId);
 	}
-	public addGroupData(groupId: string, data: IGroup) {
+	public addGroupData(data: IGroup) {
 		if (!this.data || !this.data.groups) return;
-		if (this.data.groups.has(groupId)) return;
-		this.data.groups.set(groupId, data);
+		if (this.isGroupExist(data.groupId)) return;
+		if (this.data.groups.length === undefined) this.data.groups = new Array<IGroup>();
+		this.data.groups.push(data);
 		this.saveData();
 	}
 	public deleteGroupData(groupId: string) {
 		if (!this.data || !this.data.groups) return;
-		if (!this.data.groups.has(groupId)) return;
-		this.data.groups.delete(groupId);
+		if (!this.isGroupExist(groupId)) return;
+		this.data.groups.splice(this.data.groups.indexOf(this.getGroupData(groupId)), 1);
 		this.saveData();
 	}
 
-	public getSessionsData = (): Map<string, ISession> | null => this.data.sessions;
+	/* ==================== Sessions ==================== */
+	public isSessionExist(sessionId: string): boolean {
+		if (
+			this.data.sessions === undefined ||
+			this.data.sessions === null ||
+			this.data.sessions.length === undefined ||
+			this.data.sessions.length === 0
+		)
+			return false;
+		this.data.sessions.forEach((target) => {
+			if (target.sessionId === sessionId) return true;
+		});
+		return false;
+	}
+
+	public getSessionsData = (): Array<ISession> | null => this.data.sessions;
 	public getSessionData(sessionId: string): ISession | null {
 		if (!this.data || !this.data.sessions) return null;
-		if (!this.data.sessions.has(sessionId)) return null;
-		return this.data.sessions?.get(sessionId);
+		if (!this.isSessionExist(sessionId)) return null;
+		return this.data.sessions.find((target) => target.sessionId == sessionId);
 	}
-	public addSessionData(sessionId: string, data: ISession) {
+	public addSessionData(data: ISession) {
 		if (!this.data || !this.data.sessions) return;
-		if (this.data.sessions.has(sessionId)) return;
-		this.data.sessions.set(sessionId, data);
+		if (this.isSessionExist(data.sessionId)) return;
+		if (this.data.sessions.length === undefined) this.data.sessions = new Array<ISession>();
+		this.data.sessions.push(data);
 		this.saveData();
 	}
 	public deleteSessionData(sessionId: string) {
 		if (!this.data || !this.data.sessions) return;
-		if (!this.data.sessions.has(sessionId)) return;
-		this.data.sessions.delete(sessionId);
+		if (!this.isSessionExist(sessionId)) return;
+		this.data.sessions.splice(this.data.sessions.indexOf(this.getSessionData(sessionId)), 1);
 		this.saveData();
 	}
 
 	public async saveData() {
-		const convertedData = {
-			//...this.data,
-			activeGroups: MapTools.mapToObj(this.data.activeGroups),
-			groups: MapTools.mapToObj(this.data.groups || new Map()),
-			sessions: MapTools.mapToObj(this.data.sessions || new Map()),
-		};
-
-		let rawData = JSON.stringify(convertedData, null, 4);
+		let rawData = JSON.stringify(this.data, null, 4);
 		fs.writeFileSync(this.dataPath, rawData, 'utf-8');
 	}
 }

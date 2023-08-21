@@ -2,29 +2,36 @@
 	"activeGroups": {
 		"channel-id": "group-id"
 	},
-	"groups": {
-		"group-id": {
+	"groups": [
+		{
+			"groupId": "group-id",
 			"deadlineTimestamp": 0,
 			"maxParticipants": 5,
-			"menus": {
-				"store-name": {
-					"menu-name": 0
-				}
-			},
-			"participants": {
-				"member-id": {
-					"store-name": [
+			"menus": [
+				{
+					"storeName": "store-name",
+					"menus": [
 						"menu-name"
+					],
+					"prices": [
+						0
 					]
 				}
-			}
+			],
+			"participants": [
+				{
+					"memberId": "member-id",
+					"menus": ["store-name|menu-name"]
+				}
+			]
 		}
-	},
-	"sessions": {
-		"session-id": {
+	],
+	"sessions": [
+		{
+			"sessionId": "session-id",
 			"user": "member-id",
 			"group": "group-id",
 			"sessionExpiresTimestamp": 0
 		}
-	}
+	]
 }
