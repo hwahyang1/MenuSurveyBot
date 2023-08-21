@@ -312,6 +312,10 @@ class SlashCommandsManager {
 				interaction.channel.send({ embeds: [embed], components: [buttons] });
 				break;
 			case '모임목록':
+				interaction.reply({
+					content: '준비중입니다.',
+					ephemeral: true,
+				});
 				break;
 		}
 	}

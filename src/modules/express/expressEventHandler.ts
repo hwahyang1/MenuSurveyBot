@@ -9,13 +9,28 @@ import ISessionRequest from '../../template/express/ISessionRequest';
 import ISessionResponse from '../../template/express/ISessionResponse';
 import ISubmitFormRequest from '../../template/express/ISubmitFormRequest';
 
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import { IParticipants } from '../../template/IData';
+
 const config = require('../../../config/config.json');
 
 class ExpressEventHandler {
+	constructor() {
+		dayjs.extend(customParseFormat);
+		dayjs.extend(utc);
+		dayjs.extend(timezone);
+		dayjs.tz.setDefault('Asia/Seoul');
+	}
+
 	public getSessionInfo(req: ISessionRequest, res: express.Response) {
 		const session = DataManager.getInstance().getSessionData(req.query.session ?? '');
 
-		if (session === null) {
+		const currentTimestamp = dayjs().unix();
+
+		if (session === null || session.sessionExpiresTimestamp < currentTimestamp) {
 			res.status(401).json(
 				new ErrorCode(
 					401,
@@ -40,7 +55,9 @@ class ExpressEventHandler {
 	public postSubmitForm(req: ISubmitFormRequest, res: express.Response) {
 		const session = DataManager.getInstance().getSessionData(req.body.session ?? '');
 
-		if (session === null) {
+		const currentTimestamp = dayjs().unix();
+
+		if (session === null || session.sessionExpiresTimestamp < currentTimestamp) {
 			res.status(401).json(
 				new ErrorCode(
 					401,
@@ -49,8 +66,27 @@ class ExpressEventHandler {
 				)
 			);
 		} else {
-			console.log(req.body); // { session: 'asdf', menus: [ '테스트가게|테스트메뉴' ] }
-			//DataManager.getInstance().deleteSessionData(session.sessionId);
+			const participantsData: IParticipants = {
+				memberId: session.user,
+				menus: req.body.menus,
+			};
+
+			let groupData = DataManager.getInstance().getGroupData(session.group);
+
+			if (
+				groupData.participants === undefined ||
+				groupData.participants === null ||
+				groupData.participants.length === undefined ||
+				groupData.participants.length === 0
+			) {
+				groupData.participants = new Array<IParticipants>();
+			}
+			groupData.participants.push(participantsData);
+
+			DataManager.getInstance().deleteSessionData(session.sessionId);
+			DataManager.getInstance().deleteGroupData(session.group);
+			DataManager.getInstance().addGroupData(groupData);
+
 			res.json(new ErrorCode(200, 'Success', '제출되었습니다.'));
 		}
 	}
