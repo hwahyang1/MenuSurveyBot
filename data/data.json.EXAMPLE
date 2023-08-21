@@ -27,6 +27,7 @@
 		{
 			"sessionId": "session-id",
 			"user": "member-id",
+			"userName": "member-name",
 			"group": "group-id",
 			"sessionExpiresTimestamp": 0
 		}

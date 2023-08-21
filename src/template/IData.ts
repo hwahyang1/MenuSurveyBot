@@ -29,6 +29,7 @@ interface IParticipants {
 interface ISession {
 	sessionId: string;
 	user: string;
+	userName: string;
 	group: string;
 	sessionExpiresTimestamp: number;
 }
