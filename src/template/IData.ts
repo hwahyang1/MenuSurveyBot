@@ -22,7 +22,7 @@ interface IMenu {
 }
 
 interface IParticipants {
-	memberId: Array<string>;
+	memberId: string;
 	menus: Array<string>;
 }
 
