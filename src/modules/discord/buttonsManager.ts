@@ -44,7 +44,7 @@ class ButtonsManager {
 
 			const groupData = DataManager.getInstance().getGroupData(groupId);
 
-			if (groupData.participants.length >= groupData.maxParticipants) {
+			if ((groupData.participants?.length ?? 0) >= groupData.maxParticipants) {
 				await interaction.reply({
 					content: `요청을 처리하지 못했습니다.\n\`모임 참여 최대인원을 초과했습니다: ${groupData.maxParticipants}명\``,
 					ephemeral: true,
