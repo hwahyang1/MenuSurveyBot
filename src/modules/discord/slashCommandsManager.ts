@@ -72,8 +72,8 @@ class SlashCommandsManager {
 				)
 				.addStringOption((option) =>
 					option
-						.setName('메뉴명')
-						.setDescription('메뉴명을 지정합니다.')
+						.setName('옵션명')
+						.setDescription('옵션명을 지정합니다.')
 						.setRequired(true)
 				)
 				.addIntegerOption((option) =>
@@ -205,7 +205,7 @@ class SlashCommandsManager {
 					// 만약 동일한 가게가 존재한다면,
 					if (index >= 0) {
 						// 기존 정보에 추가
-						groupData.menus[index].menus.push(interaction.options.getString('메뉴명'));
+						groupData.menus[index].menus.push(interaction.options.getString('옵션명'));
 						groupData.menus[index].prices.push(interaction.options.getInteger('가격'));
 					}
 					// 동일한 가게가 존재하지 않는다면,
@@ -213,7 +213,7 @@ class SlashCommandsManager {
 						// 새로운 가게 생성 + 메뉴 등록
 						const menuData: IMenu = {
 							storeName: storeName,
-							menus: [interaction.options.getString('메뉴명')],
+							menus: [interaction.options.getString('옵션명')],
 							prices: [interaction.options.getInteger('가격')],
 						};
 
@@ -227,7 +227,7 @@ class SlashCommandsManager {
 					// 새로운 가게 생성 + 메뉴 등록
 					const menuData: IMenu = {
 						storeName: storeName,
-						menus: [interaction.options.getString('메뉴명')],
+						menus: [interaction.options.getString('옵션명')],
 						prices: [interaction.options.getInteger('가격')],
 					};
 
@@ -238,7 +238,7 @@ class SlashCommandsManager {
 
 				interaction.reply({
 					content: `성공적으로 아래의 메뉴를 등록했습니다.\n\`${storeName}\` - \`${interaction.options.getString(
-						'메뉴명'
+						'옵션명'
 					)}\``,
 					ephemeral: true,
 				});
