@@ -155,12 +155,13 @@ class SlashCommandsManager {
 				const maxParticipants = interaction.options.getInteger('인원');
 				groupId = Math.random().toString(36).substring(2, 11);
 
-				let newGroupData = {
+				let newGroupData: IGroup = {
 					groupId: groupId,
 					holder: interactionMember.id,
 					name: interaction.options.getString('모임명'),
 					deadlineTimestamp: date.unix(),
 					maxParticipants: maxParticipants,
+					type: 'IGroup',
 				};
 
 				DataManager.getInstance().addGroupData(newGroupData);
@@ -215,6 +216,7 @@ class SlashCommandsManager {
 							storeName: storeName,
 							menus: [interaction.options.getString('옵션명')],
 							prices: [interaction.options.getInteger('가격')],
+							type: 'IMenu',
 						};
 
 						groupData.menus.push(menuData);
@@ -229,6 +231,7 @@ class SlashCommandsManager {
 						storeName: storeName,
 						menus: [interaction.options.getString('옵션명')],
 						prices: [interaction.options.getInteger('가격')],
+						type: 'IMenu',
 					};
 
 					groupData.menus.push(menuData);
