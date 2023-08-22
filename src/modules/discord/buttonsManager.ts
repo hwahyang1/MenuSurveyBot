@@ -103,6 +103,7 @@ class ButtonsManager {
 				userName: `${interactionMember.user.username}(${interactionMember.nickname})`,
 				group: groupId,
 				sessionExpiresTimestamp: expiresAt,
+				type: 'ISession',
 			};
 
 			if (DataManager.getInstance().isSessionExistWithUserId(interactionMember.id)) {

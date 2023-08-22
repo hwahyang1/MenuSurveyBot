@@ -69,6 +69,7 @@ class ExpressEventHandler {
 			const participantsData: IParticipants = {
 				memberId: session.user,
 				menus: req.body.menus,
+				type: 'IParticipants',
 			};
 
 			let groupData = DataManager.getInstance().getGroupData(session.group);
