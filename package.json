@@ -1,6 +1,6 @@
 {
   "name": "MenuSurveyBot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Menu Survey Discord Bot",
   "main": "dist/main.js",
   "scripts": {
