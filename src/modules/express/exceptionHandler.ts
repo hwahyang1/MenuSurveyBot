@@ -2,7 +2,7 @@
 
 import express from 'express';
 
-import ErrorCode from '../../template/express/ErrorCode';
+import StatusCode from '../../template/express/StatusCode';
 
 class ExceptionHandler {
 	public static UnhandledExceptionHandler = (
@@ -13,7 +13,7 @@ class ExceptionHandler {
 	) => {
 		console.log(err);
 		res.status(520).json(
-			new ErrorCode(520, 'Unhandled Exception', '정의되지 않은 내부 오류입니다.')
+			new StatusCode(520, 'Unhandled Exception', '정의되지 않은 내부 오류입니다.')
 		);
 	};
 
@@ -22,7 +22,7 @@ class ExceptionHandler {
 		res: express.Response,
 		next: express.NextFunction
 	) => {
-		res.status(404).json(new ErrorCode(404, 'Not Found', '올바르지 않은 접근입니다.'));
+		res.status(404).json(new StatusCode(404, 'Not Found', '올바르지 않은 접근입니다.'));
 	};
 }
 

@@ -4,7 +4,7 @@ import express from 'express';
 
 import DataManager from '../dataManager';
 
-import ErrorCode from '../../template/express/ErrorCode';
+import StatusCode from '../../template/express/StatusCode';
 import ISessionRequest from '../../template/express/ISessionRequest';
 import ISessionResponse from '../../template/express/ISessionResponse';
 import ISubmitFormRequest from '../../template/express/ISubmitFormRequest';
@@ -32,7 +32,7 @@ class ExpressEventHandler {
 
 		if (session === null || session.sessionExpiresTimestamp < currentTimestamp) {
 			res.status(401).json(
-				new ErrorCode(
+				new StatusCode(
 					401,
 					'Invalid Session',
 					'만료되었거나 유효하지 않은 세션입니다. (또는 모임 마감시간이 지났습니다.) 링크를 다시 생성 해 주세요.'
@@ -59,7 +59,7 @@ class ExpressEventHandler {
 
 		if (session === null || session.sessionExpiresTimestamp < currentTimestamp) {
 			res.status(401).json(
-				new ErrorCode(
+				new StatusCode(
 					401,
 					'Invalid Session',
 					'만료되었거나 유효하지 않은 세션입니다. (또는 모임 마감시간이 지났습니다.) 링크를 다시 생성 해 주세요.'
@@ -87,7 +87,7 @@ class ExpressEventHandler {
 			DataManager.getInstance().deleteGroupData(session.group);
 			DataManager.getInstance().addGroupData(groupData);
 
-			res.json(new ErrorCode(200, 'Success', '제출되었습니다.'));
+			res.json(new StatusCode(200, 'Success', '제출되었습니다.'));
 		}
 	}
 }

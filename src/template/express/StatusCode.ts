@@ -1,6 +1,6 @@
 'use strict';
 
-class ErrorCode {
+class StatusCode {
 	public code: number;
 	public description: string;
 	public userDescription: string;
@@ -12,4 +12,4 @@ class ErrorCode {
 	}
 }
 
-export default ErrorCode;
+export default StatusCode;
