@@ -91,10 +91,11 @@ class SlashCommandsManager {
 						.setDescription('모임의 코드를 지정합니다.')
 						.setRequired(true)
 				)
+				.addBooleanOption((option) =>
 					option
-						.setName('유효성검증')
-						.setDescription('마감일이 지나지 않은 모임만 표시 할 지 결정합니다.')
-						.setRequired(false)
+						.setName('전체알림')
+						.setDescription('@everyone 멘션을 할 지 결정합니다.')
+						.setRequired(true)
 				),
 		];
 	}
@@ -308,7 +309,12 @@ class SlashCommandsManager {
 					ephemeral: true,
 				});
 
-				interaction.channel.send({ embeds: [embed], components: [buttons] });
+				if (interaction.options.getBoolean('전체알림')) {
+					interaction.channel.send({ embeds: [embed], components: [buttons], content: '@everyone' });
+				}
+				else {
+					interaction.channel.send({ embeds: [embed], components: [buttons] });
+				}
 				break;
 		}
 	}
