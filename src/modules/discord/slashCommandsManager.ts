@@ -83,8 +83,8 @@ class SlashCommandsManager {
 						.setRequired(true)
 				),
 			new SlashCommandBuilder()
-				.setName('모임활성화')
-				.setDescription('모임의 활성화 여부를 지정합니다. (서버 관리자 & 봇 관리자 전용)')
+				.setName('모임알림')
+				.setDescription('현재 채널에모임의 개최를 알립니다. (서버 관리자 & 봇 관리자 전용)')
 				.addStringOption((option) =>
 					option
 						.setName('모임코드')
@@ -167,7 +167,7 @@ class SlashCommandsManager {
 				DataManager.getInstance().addGroupData(newGroupData);
 
 				interaction.reply({
-					content: `성공적으로 새로운 모임을 생성했습니다.\n모임의 코드는 \`${groupId}\`입니다.\n\n**※ 모임이 현재 비활성화 상태입니다. 참여자를 모집하려면, 반드시 모임을 활성화 상태로 변경 해 주세요.**`,
+					content: `성공적으로 새로운 모임을 생성했습니다.\n모임의 코드는 \`${groupId}\`입니다.\n\n**※ 모임이 현재 한번도 알려지지 않은 상태입니다. 참여자를 모집하려면, 반드시 모임 알림을 진행 해 주세요.**`,
 					ephemeral: true,
 				});
 
@@ -248,7 +248,7 @@ class SlashCommandsManager {
 
 				DataManager.getInstance().addGroupData(groupData);
 				break;
-			case '모임활성화':
+			case '모임알림':
 				// 권한 체크
 				if (
 					!interactionMember.permissions.has(PermissionsBitField.Flags.Administrator) &&
