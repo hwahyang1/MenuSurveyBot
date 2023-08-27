@@ -90,11 +90,7 @@ class SlashCommandsManager {
 						.setName('모임코드')
 						.setDescription('모임의 코드를 지정합니다.')
 						.setRequired(true)
-				),
-			new SlashCommandBuilder()
-				.setName('모임목록')
-				.setDescription('모든 모임의 목록을 보여줍니다.')
-				.addStringOption((option) =>
+				)
 					option
 						.setName('유효성검증')
 						.setDescription('마감일이 지나지 않은 모임만 표시 할 지 결정합니다.')
@@ -313,12 +309,6 @@ class SlashCommandsManager {
 				});
 
 				interaction.channel.send({ embeds: [embed], components: [buttons] });
-				break;
-			case '모임목록':
-				interaction.reply({
-					content: '준비중입니다.',
-					ephemeral: true,
-				});
 				break;
 		}
 	}
