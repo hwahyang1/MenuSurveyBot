@@ -309,12 +309,11 @@ class SlashCommandsManager {
 					ephemeral: true,
 				});
 
-				if (interaction.options.getBoolean('전체알림')) {
-					interaction.channel.send({ embeds: [embed], components: [buttons], content: '@everyone' });
-				}
-				else {
-					interaction.channel.send({ embeds: [embed], components: [buttons] });
-				}
+				interaction.channel.send({
+					embeds: [embed],
+					components: [buttons],
+					content: interaction.options.getBoolean('전체알림') ? '@everyone' : 'ㅤ',
+				});
 				break;
 		}
 	}
