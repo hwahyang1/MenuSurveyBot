@@ -9,6 +9,7 @@ import {
 	ButtonBuilder,
 	ActionRowBuilder,
 	ButtonStyle,
+	TextChannel,
 } from 'discord.js';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v10';
@@ -84,7 +85,9 @@ class SlashCommandsManager {
 				),
 			new SlashCommandBuilder()
 				.setName('모임알림')
-				.setDescription('현재 채널에모임의 개최를 알립니다. (서버 관리자 & 봇 관리자 전용)')
+				.setDescription(
+					'현재 채널에 모임의 개최를 알립니다. (서버 관리자 & 봇 관리자 전용)'
+				)
 				.addStringOption((option) =>
 					option
 						.setName('모임코드')
@@ -129,6 +132,8 @@ class SlashCommandsManager {
 	) {
 		let groupData: IGroup;
 		let groupId: string;
+
+		let embed: EmbedBuilder;
 
 		switch (interaction.commandName) {
 			case '모임추가':
@@ -278,7 +283,7 @@ class SlashCommandsManager {
 				}
 				groupData = DataManager.getInstance().getGroupData(groupId);
 
-				const embed = new EmbedBuilder()
+				embed = new EmbedBuilder()
 					.setTitle(`${groupData.name} 모임 개최 중!`)
 					.setDescription(`<@${groupData.holder}>님의 모임이 현재 개최 중입니다!`)
 					.addFields({
@@ -318,7 +323,7 @@ class SlashCommandsManager {
 					ephemeral: true,
 				});
 
-				interaction.channel.send({
+				(interaction.channel as TextChannel).send({
 					embeds: [embed],
 					components: [buttons],
 					content: interaction.options.getBoolean('전체알림') ? '@everyone' : 'ㅤ',
