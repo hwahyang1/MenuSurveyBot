@@ -1,13 +1,13 @@
 {
   "name": "MenuSurveyBot",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Menu Survey Discord Bot",
   "main": "dist/main.js",
   "scripts": {
-    "update-dependencies": "npx ncu -u && npm i -D --save",
+    "update-dependencies": "npm i -g npm-check-updates@latest && npx ncu -u && npm i -D --save",
     "test": "ts-node src/main.ts",
     "build": "tsc --project tsconfig.json",
-    "run": "node dist/main.js"
+    "start": "node dist/main.js"
   },
   "repository": {
     "type": "git",
