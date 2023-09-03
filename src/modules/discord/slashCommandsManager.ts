@@ -97,6 +97,15 @@ class SlashCommandsManager {
 						.setDescription('@everyone 멘션을 할 지 결정합니다.')
 						.setRequired(true)
 				),
+			new SlashCommandBuilder()
+				.setName('모임정보')
+				.setDescription('특정 모임의 정보를 조회합니다.')
+				.addStringOption((option) =>
+					option
+						.setName('모임코드')
+						.setDescription('모임의 코드를 지정합니다.')
+						.setRequired(true)
+				),
 		];
 	}
 
@@ -314,6 +323,48 @@ class SlashCommandsManager {
 					components: [buttons],
 					content: interaction.options.getBoolean('전체알림') ? '@everyone' : 'ㅤ',
 				});
+				break;
+			case '모임정보':
+				groupId = interaction.options.getString('모임코드');
+				if (!DataManager.getInstance().isGroupExist(groupId)) {
+					await interaction.reply({
+						content: `요청을 처리하지 못했습니다.\n\`유효하지 않은 모임코드 입니다: ${groupId}\``,
+						ephemeral: true,
+					});
+					return;
+				}
+				groupData = DataManager.getInstance().getGroupData(groupId);
+
+				embed = new EmbedBuilder()
+					.setTitle(`${groupData.name} 모임 정보`)
+					.setDescription(`<@${groupData.holder}>님이 개최한 모임입니다.`)
+					.addFields({
+						name: '모임 정보',
+						value: `- 모임명: \`${groupData.name}\`\n- 참여 인원: ${
+							groupData.participants?.length ?? 0
+						}/${groupData.maxParticipants}명\n- 모임 마감: <t:${
+							groupData.deadlineTimestamp
+						}> (<t:${groupData.deadlineTimestamp}:R>)`,
+						inline: false,
+					})
+					.setColor(0xbbf1ff)
+					.setFooter({ text: `모임 코드: ${groupData.groupId}` });
+
+				groupData.menus.forEach((target) => {
+					let values: string = '';
+					for (let i = 0; i < target.menus.length; i++) {
+						values += `- ${target.menus[i]} (${target.prices[i]
+							.toString()
+							.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원)\n`;
+					}
+					embed.addFields({ name: target.storeName, value: values, inline: false });
+				});
+				interaction.reply({
+					embeds: [embed],
+					content: `모임코드 \`${groupId}\` 모임의 정보는 아래와 같습니다:`,
+					ephemeral: true,
+				});
+
 				break;
 		}
 	}
