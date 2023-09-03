@@ -56,8 +56,8 @@ class SlashCommandsManager {
 						.setRequired(true)
 				),
 			new SlashCommandBuilder()
-				.setName('메뉴추가')
-				.setDescription('모임에 메뉴를 추가합니다. (서버 관리자 & 봇 관리자 전용)')
+				.setName('옵션추가')
+				.setDescription('모임에 옵션을 추가합니다. (서버 관리자 & 봇 관리자 전용)')
 				.addStringOption((option) =>
 					option
 						.setName('모임코드')
@@ -169,7 +169,7 @@ class SlashCommandsManager {
 				});
 
 				break;
-			case '메뉴추가':
+			case '옵션추가':
 				// 권한 체크
 				if (
 					!interactionMember.permissions.has(PermissionsBitField.Flags.Administrator) &&
