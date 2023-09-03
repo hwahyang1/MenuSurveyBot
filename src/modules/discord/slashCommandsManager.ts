@@ -109,6 +109,9 @@ class SlashCommandsManager {
 						.setDescription('모임의 코드를 지정합니다.')
 						.setRequired(true)
 				),
+			new SlashCommandBuilder()
+				.setName('모임목록')
+				.setDescription('최근 등록된 5개 모임의 정보를 출력합니다.'),
 		];
 	}
 
@@ -370,6 +373,39 @@ class SlashCommandsManager {
 					ephemeral: true,
 				});
 
+				break;
+			case '모임목록':
+				const allGroupData = DataManager.getInstance().getGroupsData();
+
+				embed = new EmbedBuilder()
+					.setTitle(`최근 5개 모임 정보`)
+					.setColor(0xbbf1ff)
+					.setFooter({ text: `기준시각` })
+					.setTimestamp(new Date());
+
+				let index = 1;
+				let max = allGroupData.length - 5 < 0 ? 0 : allGroupData.length - 5;
+				for (let i = allGroupData.length; i > max; i--) {
+					const groupData = allGroupData[i - 1];
+					embed.addFields({
+						name: `${index}. ${groupData.groupId}`,
+						value: `- 주최자: <@${groupData.holder}>\n- 모임명: \`${
+							groupData.name
+						}\`\n- 참여 인원: ${groupData.participants?.length ?? 0}/${
+							groupData.maxParticipants
+						}명\n- 모임 마감: <t:${groupData.deadlineTimestamp}> (<t:${
+							groupData.deadlineTimestamp
+						}:R>)`,
+						inline: false,
+					});
+					index++;
+				}
+
+				interaction.reply({
+					embeds: [embed],
+					content: `최근 5개 모임의 정보는 아래와 같습니다:`,
+					ephemeral: true,
+				});
 				break;
 		}
 	}
