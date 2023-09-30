@@ -140,7 +140,7 @@ class ButtonsManager {
 			const embed = new EmbedBuilder()
 				.setTitle(`${groupData.name} 모임 신청 링크 안내`)
 				.setDescription(
-					`<@${interactionMember.id}>님의 모임 신청 링크는 아래와 같습니다.\n${config.express.serverAddressForUser}/form/?s=${sessionId}\n\n- 모임 신청 링크는 개인별로 지급됩니다. 모임 신청 링크를 타인과 공유하지 마세요.\n- 이전에 생성된 모임 신청 링크는 자동으로 만료됩니다.\n- 본 모임 신청 링크는 <t:${expiresAt}> (<t:${expiresAt}:R>)이 지나면 만료됩니다.\n- 만료 시간이 지나면 이미 접속 중이어도 제출이 불가능해집니다.`
+					`<@${interactionMember.id}>님의 모임 신청 링크는 아래와 같습니다.\n${config.fastify.serverAddressForUser}/form/?s=${sessionId}\n\n- 모임 신청 링크는 개인별로 지급됩니다. 모임 신청 링크를 타인과 공유하지 마세요.\n- 이전에 생성된 모임 신청 링크는 자동으로 만료됩니다.\n- 본 모임 신청 링크는 <t:${expiresAt}> (<t:${expiresAt}:R>)이 지나면 만료됩니다.\n- 만료 시간이 지나면 이미 접속 중이어도 제출이 불가능해집니다.`
 				)
 				.setColor(0xbbf1ff)
 				.setFooter({ text: `모임 코드: ${groupData.groupId}` });
@@ -297,7 +297,7 @@ class ButtonsManager {
 			const embed = new EmbedBuilder()
 				.setTitle(`${groupData.name} 모임 신청 링크 안내`)
 				.setDescription(
-					`<@${interactionMember.id}>님의 모임 신청 링크는 아래와 같습니다.\n${config.express.serverAddressForUser}/form/?s=${sessionId}\n\n- **기존 신청 내역은 삭제되었습니다.**\n- 모임 신청 링크는 개인별로 지급됩니다. 모임 신청 링크를 타인과 공유하지 마세요.\n- 이전에 생성된 모임 신청 링크는 자동으로 만료됩니다.\n- 본 모임 신청 링크는 <t:${expiresAt}> (<t:${expiresAt}:R>)이 지나면 만료됩니다.\n- 만료 시간이 지나면 이미 접속 중이어도 제출이 불가능해집니다.`
+					`<@${interactionMember.id}>님의 모임 신청 링크는 아래와 같습니다.\n${config.fastify.serverAddressForUser}/form/?s=${sessionId}\n\n- **기존 신청 내역은 삭제되었습니다.**\n- 모임 신청 링크는 개인별로 지급됩니다. 모임 신청 링크를 타인과 공유하지 마세요.\n- 이전에 생성된 모임 신청 링크는 자동으로 만료됩니다.\n- 본 모임 신청 링크는 <t:${expiresAt}> (<t:${expiresAt}:R>)이 지나면 만료됩니다.\n- 만료 시간이 지나면 이미 접속 중이어도 제출이 불가능해집니다.`
 				)
 				.setColor(0xbbf1ff)
 				.setFooter({ text: `모임 코드: ${groupData.groupId}` });

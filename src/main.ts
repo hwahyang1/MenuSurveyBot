@@ -7,17 +7,18 @@ import {
 	ChatInputCommandInteraction,
 	ButtonInteraction,
 } from 'discord.js';
-import express from 'express';
+import path from 'path';
+import fastify, { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 
 import DataManager from './modules/dataManager';
 import SlashCommandsManager from './modules/discord/slashCommandsManager';
 import ButtonsManager from './modules/discord/buttonsManager';
-import ExceptionHandler from './modules/express/exceptionHandler';
-import ExpressEventHandler from './modules/express/expressEventHandler';
+import ExceptionHandler from './modules/fastify/exceptionHandler';
+import ExpressEventHandler from './modules/fastify/expressEventHandler';
 
 const config = require('../config/config.json');
 
-const app = express();
+const server = fastify();
 
 const client = new Client({
 	intents: [
@@ -34,21 +35,25 @@ const expressEventHandler = new ExpressEventHandler();
 
 /////////////// Functions
 
-/////////////// Express Config
-app.use(express.json(), express.urlencoded({ extended: true }));
-app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-	res.setHeader('Server', config.express.header.Server);
-	res.setHeader('x-powered-by', config.express.header['x-powered-by']);
-	next();
+/////////////// Fastify Config
+server.addHook('preHandler', (request, reply, done) => {
+	reply.header('Server', config.fastify.header.Server);
+	reply.header('x-powered-by', config.fastify.header['x-powered-by']);
+	done();
 });
 
-/////////////// Express Events
-app.use('/form', express.static('src/public'));
+server.register(require('@fastify/static'), {
+	root: path.join(__dirname, 'public'),
+	prefix: '/form/',
+	index: 'index.html'
+});
 
-app.get('/api/v1/sessionInfo', expressEventHandler.getSessionInfo);
-app.post('/api/v1/submit', expressEventHandler.postSubmitForm);
+/////////////// Fastify Event
+server.get('/api/v1/sessionInfo', expressEventHandler.getSessionInfo);
+server.post('/api/v1/submit', expressEventHandler.postSubmitForm);
 
-app.use(ExceptionHandler.NotFoundExceptionHandler, ExceptionHandler.UnhandledExceptionHandler);
+server.setNotFoundHandler(ExceptionHandler.NotFoundExceptionHandler);
+server.setErrorHandler(ExceptionHandler.UnhandledExceptionHandler);
 
 /////////////// Discord Events
 client.on('ready', async () => {
@@ -87,9 +92,9 @@ client.on('interactionCreate', async (rawInteraction) => {
 (async () => {
 	client.login(config.discord.token);
 
-	app.listen(config.express.serverPort, config.express.serverHost, () => {
+	server.listen({ port: config.fastify.serverPort, host: config.fastify.serverHost }, () => {
 		console.log(
-			`MenuSurveyBot API listening on ${config.express.serverHost}:${config.express.serverPort}`
+			`MenuSurveyBot API listening on ${config.fastify.serverHost}:${config.fastify.serverPort}`
 		);
 	});
 

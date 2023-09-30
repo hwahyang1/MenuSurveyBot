@@ -175,6 +175,8 @@ class SlashCommandsManager {
 					name: interaction.options.getString('모임명'),
 					deadlineTimestamp: date.unix(),
 					maxParticipants: maxParticipants,
+					menus: [],
+					participants: [],
 					type: 'IGroup',
 				};
 

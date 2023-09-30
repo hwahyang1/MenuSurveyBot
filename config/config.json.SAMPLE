@@ -1,5 +1,5 @@
 {
-    "express": {
+    "fastify": {
         "serverAddressForUser": "https://example.com",
         "serverHost": "127.0.0.1",
         "serverPort": 8080,
