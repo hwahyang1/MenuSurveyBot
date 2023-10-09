@@ -42,10 +42,11 @@ server.addHook('preHandler', (request, reply, done) => {
 	done();
 });
 
+server.register(require('@fastify/formbody'));
 server.register(require('@fastify/static'), {
 	root: path.join(__dirname, 'public'),
 	prefix: '/form/',
-	index: 'index.html'
+	index: 'index.html',
 });
 
 /////////////// Fastify Event
