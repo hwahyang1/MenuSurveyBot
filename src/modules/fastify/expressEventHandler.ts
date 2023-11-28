@@ -72,7 +72,10 @@ class ExpressEventHandler {
 		} else {
 			const participantsData: IParticipants = {
 				memberId: session.user,
-				menus: request.body.menus,
+				menus:
+					typeof request.body['menus[]'] === 'string'
+						? [request.body['menus[]']]
+						: request.body['menus[]'], // TODO
 				type: 'IParticipants',
 			};
 

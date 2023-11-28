@@ -3,7 +3,7 @@ import { FastifyRequest } from 'fastify';
 interface ISubmitFormRequest extends FastifyRequest {
 	body: {
 		session?: string;
-		menus?: Array<string>;
+		'menus[]'?: Array<string>; //TODO
 	};
 }
 
