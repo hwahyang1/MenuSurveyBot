@@ -24,7 +24,7 @@
     "@fastify/formbody": "^7.4.0",
     "@fastify/static": "^6.12.0",
     "dayjs": "^1.11.10",
-    "discord.js": "^14.14.1",
+    "discord.js": "^14.15.3",
     "fastify": "^4.24.3"
   },
   "devDependencies": {
